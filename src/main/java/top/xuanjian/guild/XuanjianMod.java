@@ -41,7 +41,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class XuanjianMod implements ModInitializer {
     public static final String MOD_ID = "xuanjianmod";
-    public static final String VERSION = "1.0.0";
+    public static final String VERSION = "1.0.2";
     private static final Logger LOGGER = LoggerFactory.getLogger("xuanjianmod");
 
     /** 单例：客户端入口（XuanjianModClient）通过该实例复用全部管理器 */

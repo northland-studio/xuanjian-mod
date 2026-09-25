@@ -22,6 +22,27 @@ public class ApiClient {
     private static final Gson GSON = new Gson();
     private static final Duration TIMEOUT = Duration.ofSeconds(10);
 
+    /**
+     * 强制 IPv4 优先。
+     *
+     * <p>踩过的坑：xuanjian.top 在 Cloudflare 上同时有 A 与 AAAA 记录，而 Java 的 HttpClient
+     * **不做 Happy Eyeballs 回退** —— 一旦所在网络是"有 IPv6 地址但到 Cloudflare 的 IPv6 路由不通"
+     * 的半通状态（国内不少家宽/机房如此），连接会一直等到超时，报 HTTP connect timed out，
+     * 表现为"浏览器打得开官网、模组却提示官网服务不可用"。
+     *
+     * <p>必须在 InetAddress 类初始化之前设置才生效，所以放在静态块；ApiClient 是本模组最早触网的对象。
+     */
+    static {
+        try {
+            if (!"true".equalsIgnoreCase(System.getProperty("java.net.preferIPv4Stack"))) {
+                System.setProperty("java.net.preferIPv4Stack", "true");
+                LOGGER.info("[xuanjianmod] 已强制 IPv4 优先（规避 IPv6 半通导致的连接超时）");
+            }
+        } catch (Exception e) {
+            LOGGER.warn("[xuanjianmod] 设置 IPv4 优先失败，继续用系统默认: {}", e.getMessage());
+        }
+    }
+
     private final HttpClient httpClient;
     private String baseUrl;
     private String serverKey;

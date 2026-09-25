@@ -50,8 +50,8 @@ jobs:
         if: github.event_name == 'push'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.1-26.2
-          name: xuanjianmod 26.2.x (v1.0.1-26.2)
+          tag_name: v1.0.2-26.2
+          name: xuanjianmod 26.2.x (v1.0.2-26.2)
           body: |
             Xuanjian Guild Mod — Minecraft 26.2.x Fabric 构建。
             - 全新模组主界面：左侧导航 + 卡片式布局，联动官网 API 显示头像、称号、境界、贡献点、排名
